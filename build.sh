@@ -7,6 +7,9 @@ cd util-linux/
 ./configure --without-python --disable-all-programs --enable-nsenter
 make
 
+# CD back to root
+cd ..
+
 SHA1=$(git rev-parse HEAD)
 mkdir -p build/current
 
