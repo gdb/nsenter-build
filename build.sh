@@ -14,7 +14,7 @@ SHA1=$(git rev-parse HEAD)
 mkdir -p build/current
 
 # Actual build contents
-cp util-linux/nsenter build
+cp util-linux/nsenter build/current/
 git remote show origin | grep 'Fetch URL' | sed 's/.*Fetch URL: //' > build/current/origin
 
 # And clone for relevant SHA1
