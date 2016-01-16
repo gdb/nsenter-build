@@ -6,3 +6,13 @@ cd util-linux/
 ./autogen.sh
 ./configure --without-python --disable-all-programs --enable-nsenter
 make
+
+SHA1=$(git rev-parse HEAD)
+mkdir -p build/current
+
+# Actual build contents
+cp util-linux/nsenter build
+git remote show origin | grep 'Fetch URL' | sed 's/.*Fetch URL: //' > build/current/origin
+
+# And clone for relevant SHA1
+cp -r build/current build/$(SHA1)

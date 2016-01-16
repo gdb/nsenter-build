@@ -1,6 +1,20 @@
 before_script:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y git build-essential libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
-
+- sudo apt-get update -qq
+- sudo apt-get install -y git build-essential libncurses5-dev libslang2-dev gettext
+  zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf
+  automake autopoint libtool
 script:
-  - ./build.sh
+- "./build.sh"
+deploy:
+  provider: s3
+  local-dir: build
+  upload-dir: executable-travis-builds/nsenter-build
+  region: us-west-2
+  acl: public_read
+  skip_cleanup: true
+  access_key_id:
+    secure: mwyryo5JtTNX9WXXE5TxQyylMlfEa0x+to22vJJF36yNc4IfG7OdQnKqSC+M02J/pzSPoX8VtoYFRoorQI1wUeGCxHBlJd01rFUsq0OdhrO4dIhQ7zThlWyFTPQJohAOoUv+4ew/b1jV6onJZtdpC2BzLGA34C7WRPfeE0DVgbXtVlW6riYtvsYyFaE+rnc5F0HvWhDX0JmEK6/KOh7nEoPcIz/MU7vEN7YCQhnTm3PCsbZc10I0+Yu6ZxSyB6DAmjZKNk01zPG8rav4xx5MoEdtvI+aPDmNs5V/y0GucNhFyQIQm39C+FEzJCpH2UsHhYyNzD2dzZ9gW1UfXfLNfprwumTnF4WOyoFqQO8IbF9uuvnAicdK/lep/Udpwt9S+Bw43GYFU+nNe+6StMfjhnRFgq0L9/KAJflBFI00rUA32Gy74HhtZ4MzEIxclDyu5dK21/WfmL34k4ir9JADM4HllQrOy+/LTLEQzdFO1JRe+rhoOM8yz9ZdZRBk89sFNZ8tETG2C57c3RxajD8F3yQ6KyPXMVjgyF6MImvSTvddoA57nCFoPsJodbIB4xPifbzH2RgvG3HisJRIj9zZmP6Tj15C2q4O94QIVSjM9Y9QNEhpR3DFicgGDjl+OIDJ7wsbeCvqJvDnm2gdGEwTgxbg9h93IJBuxbopP80o37U=
+  secret_access_key:
+    secure: jnX9rG9Gd6HImFqur4RiTaxVsvKY2C4+8mfI+R1+1jAwDPQ52B4D3gIvn2ND/SOdd3+CkVBeX5MclClEaFsfsQM2doShZzluqSL0qfkzjx0q1nc5s/1cp/x8rl4n9g1JqR9PxlhF8BYfSaDG/+JihGBe+is0Tp47rB+fARtMLmWX477ljO5lqz7mkWD4jR9sTYjGH4LM7rsEx2CxOQgTF1I6qhFOHBUgoS1tHhQl/ZAoAiOoMOBBQ8YLAsbloW2rZOOY3HUrMxWmkJ0J95wYCuzOwptiOvPeW3jMihFSAhUYXN1LhfvZokLwrrrkBEFaq1OmhJnYgNTiu4iavFguX9JKjWNZ0fVbbHOmVdLIdUeErk0GyQ19Q4Z/gTyoluoHnr027cUFWT8t9oGoMKoUGq9cFmB0OpEsXpGN+c/5L2R5ZlJQhKDgBgGw3HSrqoXTvVGlXD6oDbJIeg9L2kloxMlkJGbDSm8dj63ATTexetIj+C/O/HEvr8t5NvGCoDnkEPHXWV4aVTiH3zfQN/pYrMvp+43w/2URUA0Pfs5jDW13c36yT3EIc25Mqt6vPtp5tgkiCxMCHOL0M1YTzdnyAfjr/wFMetfpz9fPkz13hX0UOy2J3Bl6dH9S3iIHKPwu0wwHAEl7MsSzPpN6k8jsG2rMDQthlmkVCWid1h9+2is=
+  bucket:
+    secure: TDUdzWqrFdPNG5sRIXlB+qlJqun77YRX2J0TbyMhHhvwU++T1sC+WsxPBhi+MfzEUj55cBV8dgMye2qHehQPsXjISA+01cEfwrGP0wWgU/1B6NYQCo84I1ugVs1aF8mZ41oGOjRTc/Bka5dtXnO45Gf4tzmgUg29z6gd5TGHGcXsr7/ImH1UEvNaus1yDcC4RQ8nEf4R6dkYtpE0eepQEqah+ElnPcypYKFgRhz8ePDLDnsJUoPZTAJo7IKvZbWdjXTk7IWd6g7ktsVIi7adZvVPOxGladYrsfKm1nlKn4JyHBHR4N1x0vrhB1aQ9i8KaSGh6t9FzOm0YOEJDz6zwz+x6AWNfhOmcDRVTpleEA24BdaqCk0rZs4p20Xp+DuWL/JkbSo/8qIK4DF8Iwa5BAnzQhjT73Purjp+hxEAmviJ2oJ0F9znEjIoFgxyQaGoY2LsEaPFQoko1RLTc+cjTTFg9b7ji7LcxOSTxyS1hh92ZMJSps/mG8N3Q0DdzdzsZXGIelMiGkwPGMbXtQKh12UcP1iF7lFPma9Ej/Ue5YHZSoYXrrU3+9SqcFGuF+NlYrb6rnoCbYkzwpvIIRIvGuVOAw3UUT5l65grS9/0b2fUCiLWyhxNR2XIa5RtWuMcIviLMhIyZM4dhf2cDdqaiKddnH264hL+6It+91dmUB4=
